@@ -5,10 +5,12 @@ It injects its own randomly generated names each time you don't pass *--name* at
 Examples:
 
 You can use dockerwrapper to name your containers with names of your team mates
+
 ![example01](screenshots/example01.png?raw=true "example01")
 
 or even make Docker speak your language a bit
-![example02](screenshots/example01.png?raw=true "example02 - Polish version")
+
+![example02](screenshots/example02.png?raw=true "example02 - Polish version")
 # Docker container names
 
 The operator can identify a Docker container in three ways:
