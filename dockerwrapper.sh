@@ -6,10 +6,11 @@
 # Adjectives list: https://describingwords.net/describing-words-to-describe-a-hero/
 # Adjectives and Heroes list: https://github.com/moby/moby/blob/master/pkg/namesgenerator/names-generator.go
 
-DOCKER=$(which docker) || exit 1
-PARAMS=$@
+docker_bin=$(which docker) || exit 1
+params=$@
+max_retries=20
 
-ADJECTIVES=(
+adjectives=(
     "admirable"
     "adventurous"
     "altruistic"
@@ -130,10 +131,9 @@ ADJECTIVES=(
     "wise"
     "witty"
     "worthy"
-
 )
 
-HEROES=(
+heroes=(
     "lukasz"
     "nathan"
     "jamie"
@@ -154,12 +154,21 @@ HEROES=(
     "rennis"
 )
 
-if [[ $PARAMS != *"--name "* ]];
-then
-    LEFT=${ADJECTIVES[$(( RANDOM % $(expr ${#ADJECTIVES[@]} - 1 ) ))]}
-    RIGHT=${HEROES[$(( RANDOM % $(expr ${#HEROES[@]} - 1 ) ))]}
-    DOCKER_NAME="${LEFT}_${RIGHT}"
-    PARAMS="${PARAMS/run/run --name $DOCKER_NAME}"
-fi
+generate_docker_name() {
+    retry=$1
+    left=${adjectives[$(( RANDOM % ${#adjectives[@]} ))]}
+    right=${heroes[$(( RANDOM % ${#heroes[@]} ))]}
+    docker_name="${left}_${right}"
+    if [  $($docker_bin ps | grep $docker_name | wc -l) -ge 1 ] && [ "$retry" -le "$max_retries" ]
+    then
+        let retry++
+        generate_docker_name $retry
+    fi
+}
 
-$DOCKER $PARAMS
+if [[ $params != *"--name "* ]];
+then
+    generate_docker_name 0
+    [[ $retry -gt $max_retries ]] || params="${params/run/run --name $docker_name}"
+    $docker_bin $params
+fi
