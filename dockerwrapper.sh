@@ -156,9 +156,12 @@ heroes=(
 
 generate_docker_name() {
     retry=$1
+    # Return random item from adjectives array - adjectives[ random from 0 to size of adjectives array ]
     left=${adjectives[$(( RANDOM % ${#adjectives[@]} ))]}
+    # Return random item from heroes array - heroes[ random from 0 to size of heroes array ]
     right=${heroes[$(( RANDOM % ${#heroes[@]} ))]}
     docker_name="${left}_${right}"
+    # Retry if generated name is already in use and number of attempts still doesn't exceeds max retries
     if [  $($docker_bin ps | grep $docker_name | wc -l) -ge 1 ] && [ "$retry" -le "$max_retries" ]
     then
         let retry++
@@ -168,7 +171,10 @@ generate_docker_name() {
 
 if [[ $params != *"--name "* ]];
 then
+    # Run function to generate random names
     generate_docker_name 0
+    # Bypass adding name parameter if the number of retries exceeds defined max
     [[ $retry -gt $max_retries ]] || params="${params/run/run --name $docker_name}"
+    # Run Docker client
     $docker_bin $params
 fi
