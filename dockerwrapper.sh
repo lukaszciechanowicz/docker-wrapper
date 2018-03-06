@@ -134,15 +134,14 @@ adjectives=(
 )
 
 heroes=(
-    "lukasz"
     "nathan"
+    "lukasz"
     "jamie"
     "jose"
     "michael"
     "kevin"
     "warren"
     "dominic"
-    "martin"
     "neil"
     "irshad"
     "jacques"
