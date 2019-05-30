@@ -37,14 +37,14 @@ BTW: There is a cool Docker name generator as a service available online: https:
 It's super simple. Just download dockerwrapper script and set an alias.
 
 ```
-mkdir $HOME/.dockerwrapper
-wget https://github.com/lukaszciechanowicz/dockerwrapper/blob/master/dockerwrapper.sh -P $HOME/.dockerwrapper
-chmod +x $HOME/.dockerwrapper/dockerwrapper.sh
-alias docker="$HOME/.dockerwrapper/dockerwrapper.sh"
+mkdir $HOME/.docker-wrapper
+wget https://github.com/lukaszciechanowicz/docker-wrapper/blob/master/docker-wrapper.sh -P $HOME/.docker-wrapper
+chmod +x $HOME/.dockerwrapper/docker-wrapper.sh
+alias docker="$HOME/.dockerwrapper/docker-wrapper.sh"
 ```
 To make if work after you reopen your terminal, add an alias to your *.bash_profile* / *.zshrc* file
 
 ```
-alias docker="$HOME/.dockerwrapper/dockerwrapper.sh"
+alias docker="$HOME/.docker-wrapper/docker-wrapper.sh"
 ```
 
