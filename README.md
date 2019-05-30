@@ -1,4 +1,4 @@
-# dockerwrapper
+# docker-wrapper
 A super simple Bash wrapper for Docker client that generates your own container names.
 It injects its own randomly generated names each time you don't pass *--name* attribute to *docker run* command.
 
